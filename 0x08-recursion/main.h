@@ -24,10 +24,10 @@ int _sqrt_recursion(int n);
 /* 6-is_prime_number.c */
 int is_prime_number(int n);
 
-/* 7-is_palindrome.c */
+/* 100-is_palindrome.c */
 int is_palindrome(char *s);
 
-/* 100-wildcmp.c */
+/* 101-wildcmp.c */
 int wildcmp(char *s1, char *s2);
 
 #endif
