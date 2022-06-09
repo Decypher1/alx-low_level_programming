@@ -1,5 +1,3 @@
-es (34 sloc)  687 Bytes
-   
 #include "lists.h"
 /**
  * add_dnodeint_end - adds a new node at the end of a list
