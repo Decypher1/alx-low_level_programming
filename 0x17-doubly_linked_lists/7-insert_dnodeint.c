@@ -1,50 +1,54 @@
 #include "lists.h"
+
 /**
- * insert_dnode_at_index - inserts a new node at a given posotion
- * @h: the pointer to the struct
- * @idx: index of the list where the new node should be added
- * @n: integer in the struct
- * Return: Address of the new node or NULL if it failed
+ * insert_dnodeint_at_index - inserts a new node at
+ * a given position
+ *
+ * @h: head of the list
+ * @idx: index of the new node
+ * @n: value of the new node
+ * Return: the address of the new node, or NULL if it failed
  */
-dlistint_t *insert_dnodeint_at_index(dlistint_t **h,
-unsigned int idx, int n)
+dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 {
-	dlistint_t *newnode, *current = *h, *prev;
-	unsigned int index;
+	dlistint_t *new;
+	dlistint_t *head;
+	unsigned int i;
 
-	if (*h == NULL && idx != 0)
-		return (NULL);
-	newnode = malloc(sizeof(dlistint_t));
-	if (newnode == NULL)
-		return (NULL);
-
-	if (*h != NULL)
-	{prev = NULL;
-		while (current->prev != NULL)
-			current = current->prev;
-		for (index = 0; current != NULL && index < idx; index++)
-		{prev = current;
-			current = current->next;
-		}
-		if (index == idx)
-		{newnode->n = n;
-			newnode->prev = prev;
-			if (current != NULL)
-				current->prev = newnode;
-			newnode->next = current;
-			if (idx == 0)
-			{*h = newnode;
+	new = NULL;
+	if (idx == 0)
+		new = add_dnodeint(h, n);
+	else
+	{
+		head = *h;
+		i = 1;
+		if (head != NULL)
+			while (head->prev != NULL)
+				head = head->prev;
+		while (head != NULL)
+		{
+			if (i == idx)
+			{
+				if (head->next == NULL)
+					new = add_dnodeint_end(h, n);
+				else
+				{
+					new = malloc(sizeof(dlistint_t));
+					if (new != NULL)
+					{
+						new->n = n;
+						new->next = head->next;
+						new->prev = head;
+						head->next->prev = new;
+						head->next = new;
+					}
+				}
+				break;
 			}
-			else
-			{prev->next = newnode;
-			}
-			return (newnode);
+			head = head->next;
+			i++;
 		}
-		return (NULL);
 	}
-	newnode->next = NULL;
-	newnode->prev = NULL;
-	newnode->n = n;
-	*h = newnode;
-	return (newnode);
+
+	return (new);
 }
